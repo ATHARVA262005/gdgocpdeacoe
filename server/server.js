@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -18,7 +19,7 @@ app.use(cors({
 // Define an async function to connect to MongoDB
 async function connectToMongoDB() {
   try {
-    await mongoose.connect('mongodb+srv://gdgpdeacoem:dbPropertyGDG@cluster0.hirin.mongodb.net/try?retryWrites=true&w=majority&appName=Cluster0');
+    await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
