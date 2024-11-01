@@ -14,16 +14,17 @@ const allowedOrigins = ['localhost:3000', 'https://gdgocpdeacoe.vercel.app', 'ht
 // Use CORS middleware with specific origin
 app.use(cors({
   origin: function (origin, callback) {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-          callback(null, true);
-      } else {
-          callback(new Error('Not allowed by CORS'));
-      }
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
   allowedHeaders: ['Content-Type', 'Authorization', 'Mongo-URI']
 }));
 
