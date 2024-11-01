@@ -9,8 +9,8 @@ function VerifyCertificate() {
     try {
       const response = await fetch(`https://gdgocpdeacoe-backend.vercel.app/verify-certificate`, {
         method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+        headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': 'https://gdgocpdeacoe.vercel.app' },
         body: JSON.stringify({ certificateId }),
       });
       const data = await response.json();

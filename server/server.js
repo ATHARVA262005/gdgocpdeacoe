@@ -8,26 +8,28 @@ const app = express();
 app.use(bodyParser.json());
 
 
-const allowedOrigins = ['localhost:3000', 'https://gdgocpdeacoe.vercel.app', 'https://gdgocpdeacoe-backend.vercel.app'];
+const allowedOrigins = [
+  'http://localhost:3000', 
+  'https://gdgocpdeacoe.vercel.app',
+  'https://gdgocpdeacoe-backend.vercel.app'
+];
 
-
-// Use CORS middleware with specific origin
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization', 'Mongo-URI']
-}));
+  optionsSuccessStatus: 200
+};
 
+// Apply CORS middleware before other routes
+app.use(cors(corsOptions));
 
 // Define an async function to connect to MongoDB
 async function connectToMongoDB() {
@@ -77,6 +79,12 @@ app.post('/check-verification', async (req, res) => {
 
 // Serve static files from the public folder
 app.use(express.static('public'));
+
+
+// Handle preflight requests explicitly
+app.options('/verify-certificate', cors(corsOptions));
+app.options('/check-verification', cors(corsOptions));
+app.options('/verified-certificates/:certificateId', cors(corsOptions));
 
 // Start the server
 const port = 5000;

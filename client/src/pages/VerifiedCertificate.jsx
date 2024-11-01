@@ -12,8 +12,8 @@ function VerifiedCertificate() {
       setIsLoading(true); // Set loading state to true initially
       fetch('https://gdgocpdeacoe-backend.vercel.app/check-verification', {
         method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+        headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': 'https://gdgocpdeacoe.vercel.app' },
         body: JSON.stringify({ certificateId }),
       })
         .then((response) => response.json())
