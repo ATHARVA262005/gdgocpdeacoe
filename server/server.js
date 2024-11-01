@@ -8,11 +8,23 @@ const app = express();
 app.use(bodyParser.json());
 
 
+const allowedOrigins = ['localhost:3000', 'https://gdgocpdeacoe.vercel.app', 'https://gdgocpdeacoe-backend.vercel.app'];
+
+
 // Use CORS middleware with specific origin
 app.use(cors({
-  origin: 'https://gdgocpdeacoe.vercel.app', // Replace with your frontend URL
-  methods: ['GET', 'POST', 'OPTIONS','PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+  origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+      } else {
+          callback(new Error('Not allowed by CORS'));
+      }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'Authorization', 'Mongo-URI']
 }));
 
 
