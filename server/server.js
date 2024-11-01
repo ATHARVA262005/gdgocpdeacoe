@@ -1,21 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 app.use(bodyParser.json());
 
 
-// Add CORS middleware
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://gdgocpdeacoe.vercel.app"); // Restrict to your frontend origin
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-    return res.sendStatus(200); // Change to sendStatus for clarity
-  }
-  next();
-});
+// Use CORS middleware with specific origin
+app.use(cors({
+  origin: 'https://gdgocpdeacoe.vercel.app', // Replace with your frontend URL
+  methods: ['GET', 'POST', 'OPTIONS','PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+}));
 
 
 // Define an async function to connect to MongoDB
