@@ -7,7 +7,7 @@ function VerifyCertificate() {
 
   const handleCheckVerification = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/verify-certificate`, {
+      const response = await fetch(`https://gdgocpdeacoe-backend.vercel.app/verify-certificate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ certificateId }),

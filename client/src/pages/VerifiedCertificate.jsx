@@ -10,7 +10,7 @@ function VerifiedCertificate() {
   useEffect(() => {
     if (certificateId) {
       setIsLoading(true); // Set loading state to true initially
-      fetch('http://localhost:5000/check-verification', {
+      fetch('https://gdgocpdeacoe-backend.vercel.app/check-verification', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ certificateId }),
