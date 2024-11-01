@@ -1,0 +1,20 @@
+.nav-item {
+    position: relative;
+    padding-bottom: 0.1rem; /* Adjust as needed */
+  }
+  
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: red;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .nav-item:hover::after {
+    width: 100%;
+  }
+  
